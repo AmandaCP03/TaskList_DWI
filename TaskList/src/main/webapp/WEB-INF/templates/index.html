@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Tarefas</title>
+</head>
+<body>
+	<h3>Lista de Tarefas</h3>
+	<div th:each="task: ${tasks}">
+		<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
+		<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
+		<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+	</div>
+</body>
+</html>

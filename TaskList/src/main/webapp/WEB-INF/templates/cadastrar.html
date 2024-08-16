@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Tarefas</title>
+</head>
+<body>
+	<h3>Lista de Tarefas</h3>
+	<form th:action="@{/tasks/adicionar}" method="post">
+		<label for="deadline">Data de conclusão:</label>
+		<input type="date" id="deadline" name="deadline">
+		<br/><br/>
+		
+		<label for="text">Descreva sua tarefa aqui:</label><br/>
+		<textarea id="text" name="text" rows="5" cols="33"></textarea>
+		
+		<br/><br/>
+		<button type="submit">Cadastrar</button>
+	</form>
+</body>
+</html>
