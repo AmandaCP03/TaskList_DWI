@@ -19,7 +19,7 @@ public class ListarTasks implements Command{
 		TaskDAO dao = new TaskDAO();
 		List<Task> tasks = dao.findAll();
 		request.setAttribute("tasks", tasks);
-		Flash.move(request, "carrinho");
+		//Flash.move(request, "listar");
 		Template.render("index", request, response);	
 	}
 

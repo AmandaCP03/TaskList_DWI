@@ -1,15 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Lista de Tarefas</title>
+	<meta charset="UTF-8">
+	<title>Lista de Tarefas</title>
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<script th:src="@{/js/Task.js}"></script>
+	
 </head>
 <body>
 	<h3>Lista de Tarefas</h3>
-	<div th:each="task: ${tasks}">
-		<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
-		<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
-		<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+	<a th:href="@{/tasks/cadastrar}">Nova Atividade +</a>
+	
+	
+	
+	<div class="tasks">
+		<div class="AIniciar">
+			<h4>A iniciar</h4>
+			<div th:each="task : ${tasks}" th:if="${task.status == 'A iniciar'}">
+				<p>
+					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
+					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
+				</p>
+				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
+				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+				
+				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
+				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
+				
+				<hr>
+			</div>
+			<div th:if="${#lists.isEmpty(tasks)}">
+	            <p>Nenhuma tarefa para iniciar.</p>
+	        </div>
+			
+		</div>
+		<div class="EmAndamento">
+			<h4>Em andamento</h4>			
+			<div th:each="task : ${tasks}" th:if="${task.status == 'Em andamento'}">
+				<p>
+					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
+					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
+				</p>
+				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
+				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+				
+				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
+				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
+				
+				<hr>
+			</div>
+			<div th:if="${#lists.isEmpty(tasks)}">
+	            <p>Nenhuma tarefa para iniciar.</p>
+	        </div>
+			
+		</div>
+		
+		<div class="Concluida">
+			<h4>Concluída</h4>
+			<div  th:each="task : ${tasks}" th:if="${task.status == 'Concluida'}">
+				<p>
+					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
+					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
+				</p>
+				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
+				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+				
+				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
+				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
+				<hr>
+			</div>
+			<div th:if="${#lists.isEmpty(tasks)}">
+	            <p>Nenhuma tarefa para iniciar.</p>
+	        </div>
+			
+		</div>
+		
 	</div>
 </body>
 </html>

@@ -21,8 +21,8 @@ public class Task {
 	public Date getDeadline() {
 		return deadline;
 	}
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
+	public void setDeadline(Date date) {
+		this.deadline = date;
 	}
 	public String getStatus() {
 		return status;

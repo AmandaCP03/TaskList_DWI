@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Editar Task</title>
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<script th:src="@{/js/Task.js}"></script>
+</head>
+<body>
+	<h3>Editar</h3>
+
+	<form method="post" th:action="@{/tasks/salvar}">
+		<input type="hidden" id="id" name="id" th:value="${task.id}">
+		<p>
+			<label for="status">Status</label>
+			<select name="status" id="status">
+			  <option value="A iniciar" th:selected="${task.status == 'A iniciar'}">A iniciar</option>
+			  <option value="Em andamento" th:selected="${task.status == 'Em andamento'}">Em andamento</option>
+			  <option value="Concluida" th:selected="${task.status == 'Concluida'}">Concluída</option>
+			</select>
+		</p>
+		<p>
+			<label for="deadline">Data de término: </label>
+			<input type="date" name="deadline" id="deadline" th:value="${task.deadline}" required>
+			<span th:if="erroDeadline" class="error" th:text="${erroDeadline}"></span>
+		</p>
+
+		<p>
+			<label for="text">Descrição: </label><br>
+			<textarea name="text" id="text" th:text="${task.text}" rows="5" cols="33" required></textarea>
+			<span th:if="${erroText}" class="error" th:text="${erroText}"></span>
+		</p>
+		
+		<button type="submit">Salvar</button>
+	</form>
+
+</body>
+</html>

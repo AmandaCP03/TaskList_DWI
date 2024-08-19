@@ -15,7 +15,7 @@ import edu.ifsp.web.Command;
 import edu.ifsp.web.ControllerHelper;
 import edu.ifsp.web.LogCommand;
 
-@WebServlet("/tasks/adicionar")
+@WebServlet("/tasks/*")
 public class TaskController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
@@ -49,8 +49,20 @@ public class TaskController extends HttpServlet {
 			case "/tasks/listar":
 				cmd = new ListarTasks();
 				break;
+			case "/tasks/cadastrar":
+				cmd = new CadastroTask();
+				break;
 			case "/tasks/adicionar":
 				cmd = new AdicionarTask();
+				break;
+			case "/tasks/editar":
+				cmd = new EditarTask();
+				break;
+			case "/tasks/salvar":
+				cmd = new AdicionarTask();
+				break;
+			case "/tasks/excluir":
+				cmd = new RemoverTask();
 				break;
 			default:
 				cmd = new LogCommand();
