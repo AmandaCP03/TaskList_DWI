@@ -21,7 +21,6 @@ public class DatabaseConnector {
     }
 
     public static Connection getConnection() throws SQLException {
-    	System.out.println("Conexao: " + DriverManager.getConnection(JDBC_URL, USER, PASSWORD));
         return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
     }
     

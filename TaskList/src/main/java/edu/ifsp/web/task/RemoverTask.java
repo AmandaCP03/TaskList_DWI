@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ifsp.modelo.Task;
 import edu.ifsp.persistencia.TaskDAO;
 import edu.ifsp.web.Command;
-import edu.ifsp.web.Flash;
 import edu.ifsp.web.templates.Template;
 
 public class RemoverTask implements Command {
@@ -20,16 +19,16 @@ public class RemoverTask implements Command {
 		Task task = new Task();
 		
         if(request.getParameter("id") == null || request.getParameter("id").isBlank()) {
-        	Template.render("listar", request, response);
+        	Template.render("editar", request, response);
 		}else {
 			int id = Integer.parseInt(request.getParameter("id"));
+			System.out.println(id);
 			dao.delete(id);
-			//request.setAttribute("tarefaExcluida", "Tarefa excluída com sucesso!");
-			Flash.setAttribute(request, "listar", "tarefaExcluida", "Tarefa excluída com sucesso!");
+			
 		}
 		
         
-		response.sendRedirect(request.getContextPath() + "/tasks/listar");
+		response.sendRedirect("listar");
 	}
 
 }

@@ -53,7 +53,7 @@ public class TaskDAO {
 
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, deadline, status FROM task  ORDER BY deadline ASC;");
+					"SELECT id, text, deadline, status FROM task;");
 			
 			
 		    while (rs.next()) {
