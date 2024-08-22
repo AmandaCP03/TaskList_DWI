@@ -4,36 +4,74 @@
 	<meta charset="UTF-8">
 	<title>Editar Task</title>
 	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<script th:src="@{/js/Task.js}"></script>
+	
+	
 </head>
 <body>
-	<h3>Editar</h3>
-
-	<form method="post" th:action="@{/tasks/salvar}">
-		<input type="hidden" id="id" name="id" th:value="${task.id}">
-		<p>
-			<label for="status">Status</label>
-			<select name="status" id="status">
-			  <option value="A iniciar" th:selected="${task.status == 'A iniciar'}">A iniciar</option>
-			  <option value="Em andamento" th:selected="${task.status == 'Em andamento'}">Em andamento</option>
-			  <option value="Concluida" th:selected="${task.status == 'Concluida'}">Concluída</option>
-			</select>
-		</p>
-		<p>
-			<label for="deadline">Data de término: </label>
-			<input type="date" name="deadline" id="deadline" th:value="${task.deadline}" required>
-			<span th:if="erroDeadline" class="error" th:text="${erroDeadline}"></span>
-		</p>
-
-		<p>
-			<label for="text">Descrição: </label><br>
-			<textarea name="text" id="text" th:text="${task.text}" rows="5" cols="33" required></textarea>
-			<span th:if="${erroText}" class="error" th:text="${erroText}"></span>
-		</p>
-		
-		<button type="submit">Salvar</button>
-	</form>
-
+	
+	<div class="modal fade" id="ModalEditar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+		        <a class="close" href="listar" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </a>
+		      </div>
+		      <div class="modal-body">
+				<form method="post" th:action="@{/tasks/salvar}">
+					<input type="hidden" id="id" name="id" th:value="${task.id}">
+					<p>
+						<label for="status">Status: </label>
+						<select class="form-select" name="status" id="status">
+						  <option value="A iniciar" th:selected="${task.status == 'A iniciar'}">A iniciar</option>
+						  <option value="Em andamento" th:selected="${task.status == 'Em andamento'}">Em andamento</option>
+						  <option value="Concluida" th:selected="${task.status == 'Concluida'}">Concluída</option>
+						</select>
+					</p>
+					<p>
+						<label for="deadline">Data de término: </label>
+						<input type="date" name="deadline" id="deadline" th:value="${task.deadline}" required>
+						<span th:if="erroDeadline" class="error" th:text="${erroDeadline}"></span>
+					</p>
+			
+					<p>
+						<label for="text">Descrição: </label><br>
+						<textarea name="text" id="text" th:text="${task.text}" rows="5" cols="33" required></textarea>
+						<span th:if="${erroText}" class="error" th:text="${erroText}"></span>
+					</p>
+					<p class = "btnsEditar">
+						<a class="btn btnFechar" href="listar">Fechar</a>
+			        	<button type="submit" class="btn btnSalvar">Salvar</button>
+			        </p>
+				</form>
+			 </div>
+			
+		</div>
+	      
+	    </div>
+	  </div>
+	</div>
+	
+	<script>
+	$(document).ready(function() {
+	    const urlParams = new URLSearchParams(window.location.search);
+	
+	    if (urlParams.has('openModal') && urlParams.get('openModal') === 'true') {
+	        const taskId = urlParams.get('id');
+	        console.log('Abrindo modal para a tarefa com ID:', taskId);
+	
+	        // Personalize o conteúdo do modal aqui, se necessário
+	
+	        $('#ModalEditar').modal('show');
+	    }
+	});
+	</script>
 </body>
 </html>

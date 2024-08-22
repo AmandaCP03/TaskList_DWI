@@ -12,7 +12,7 @@ alter table usuario add constraint usuario_email_uniq unique(email);
 
 create table task (
 	id int not null auto_increment,
-	text varchar (100) not null,
+	text text (500) not null,
 	deadline date not null,
 	status varchar(20) not null,
 	primary key (id)

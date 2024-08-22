@@ -4,32 +4,52 @@
 	<meta charset="UTF-8">
 	<title>Lista de Tarefas</title>
 	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh5U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
 	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<script th:src="@{/js/Task.js}"></script>
 	
 </head>
 <body>
-	<h3>Lista de Tarefas</h3>
-	<a th:href="@{/tasks/cadastrar}">Nova Atividade +</a>
+	<div th:if="${tarefaExcluida}" class="mensagem-sucesso" id="tarefaExcluida">
+        <span th:text="${tarefaExcluida}"></span>
+        <div class="barra-container">
+        	<div class="barra" id="barraProgresso">
+        </div>
+    </div>
+    </div>
 	
+	<h3>Task List</h3>
 	
+	<a  th:href="@{/tasks/cadastrar}" class="btnfos btnfos-1">
+      <svg>
+        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+      </svg>
+     Nova Atividade +
+    </a>
 	
 	<div class="tasks">
 		<div class="AIniciar">
-			<h4>A iniciar</h4>
-			<div th:each="task : ${tasks}" th:if="${task.status == 'A iniciar'}">
-				<p>
-					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
-					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
-				</p>
-				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
-				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
-				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
-				
-				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
-				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
-				
+			<h6>A iniciar</h6>
+			<div th:each="task : ${tasks}" th:if="${task.status == 'A iniciar'}" class="task">
+				<p style=" text-align: right;">
+					<a href="#" th:onclick="taskEmAndamento([[${task.id}]], [[${task.deadline}]], [[${task.text}]]);">
+						<i style="color: #fcd403;" class="bi bi-clock"></i>
+					</a>
+					<!-- <a href="#" th:onclick="taskConcluida([[${task.id}]]);"><i style="color: #09b200" class="bi bi-check2-square"></i></a> -->
+				</p><hr>
+				<p><b>Data de Término:</b> <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p style="margin:0;"><b>Descrição: </b><p class="descricao" th:text="${task.text}"> (vazio)</p></p>
+				<p><b>Status: </b><span th:text="${task.status}"> (vazio)</span></p>
 				<hr>
+				<p style=" text-align: right; margin-bottom: 0;">
+					<span class="operacao"><a th:href="|editar?id=${task.id}&openModal=true|"><i style="color: #00afff;" class="bi bi-pencil"></i></a></span>
+					<span class="operacao"><a href="#" th:onclick="excluirTask([[${task.id}]]);"><i style="color: red;" class="bi bi-trash3"></i></a></span>
+				</p>
+				
 			</div>
 			<div th:if="${#lists.isEmpty(tasks)}">
 	            <p>Nenhuma tarefa para iniciar.</p>
@@ -37,20 +57,21 @@
 			
 		</div>
 		<div class="EmAndamento">
-			<h4>Em andamento</h4>			
-			<div th:each="task : ${tasks}" th:if="${task.status == 'Em andamento'}">
-				<p>
-					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
-					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
-				</p>
-				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
-				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
-				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
-				
-				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
-				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
-				
+			<h6>Em andamento</h6>			
+			<div th:each="task : ${tasks}" th:if="${task.status == 'Em andamento'}" class="task">
+				<p style="text-align: right;">
+					<!-- <a href="#" th:onclick="taskPendente([[${task.id}]]);"><i style="color: #fcd403;" class="bi bi-clock"></a> -->
+					<a href="#" th:onclick="taskConcluida([[${task.id}]], [[${task.deadline}]], [[${task.text}]]);"><i style="color: #09b200;" class="bi bi-check2-square"></i></a>
+				</p><hr>
+				<p><b>Data de Término:</b> <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p><b>Descrição:</b> <span th:text="${task.text}"> (vazio)</span></p>
+				<p><b>Status:</b> <span th:text="${task.status}"> (vazio)</span></p>
 				<hr>
+				<p style=" text-align: right; margin-bottom: 0;">
+					<span class="operacao"><a th:href="|editar?id=${task.id}&openModal=true|"><i style="color: #00afff;" class="bi bi-pencil"></i></a></span>
+					<span class="operacao"><a th:href="|excluir?id=${task.id}|"><i style="color: red;" class="bi bi-trash3"></i></a></span>
+				</p>
+				
 			</div>
 			<div th:if="${#lists.isEmpty(tasks)}">
 	            <p>Nenhuma tarefa para iniciar.</p>
@@ -59,26 +80,56 @@
 		</div>
 		
 		<div class="Concluida">
-			<h4>Concluída</h4>
-			<div  th:each="task : ${tasks}" th:if="${task.status == 'Concluida'}">
+			<h6>Concluída</h6>
+			<div  th:each="task : ${tasks}" th:if="${task.status == 'Concluida'}" class="task">
 				<p>
-					<a href="#" th:onclick="taskPendente([[${task.id}]]);">Pendente</a>
-					<a href="#" th:onclick="taskConcluida([[${task.id}]]);">Concluída</a>
+					<!-- <a href="#" th:onclick="taskPendente([[${task.id}]]);"><i style="color: #fcd403;" class="bi bi-clock"></a>
+					<a href="#" th:onclick="taskConcluida([[${task.id}]]);"><i style="color: #09b200" class="bi bi-check2-square"></a> -->
 				</p>
-				<p>Data de Término: <span th:text="${task.deadline}"> (vazio)</span></p>
-				<p>Descrição: <span th:text="${task.text}"> (vazio)</span></p>
-				<p>Status: <span th:text="${task.status}"> (vazio)</span></p>
+				<p><b>Data de Término:</b> <span th:text="${task.deadline}"> (vazio)</span></p>
+				<p><b>Descrição:</b> <span th:text="${task.text}"> (vazio)</span></p>
+				<p><b>Status:</b> <span th:text="${task.status}"> (vazio)</span></p>
 				
-				<span class="operacao"><a th:href="|editar?id=${task.id}|">Editar</a></span>
-				<span class="operacao"><a th:href="|excluir?id=${task.id}|">Excluir</a></span>
-				<hr>
+				<p style=" text-align: right; margin-bottom: 0;">
+					<span class="operacao" ><a th:href="|editar?id=${task.id}&openModal=true|" style="margin-left: 10px;"><i style="color: #00afff;" class="bi bi-pencil"></i></a></span>&nbsp;
+					<span class="operacao"><a th:href="|excluir?id=${task.id}|"><i style="color: red;" class="bi bi-trash3"></i></a></span>
+				</p>
 			</div>
-			<div th:if="${#lists.isEmpty(tasks)}">
+			<div th:if="${#lists.isEmpty(tasks)}" >
 	            <p>Nenhuma tarefa para iniciar.</p>
 	        </div>
 			
 		</div>
 		
 	</div>
+	
+	
+	
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mensagem = document.getElementById('tarefaExcluida');
+            const barra = document.getElementById('barraProgresso');
+            
+            if (mensagem && barra) {
+                
+                setTimeout(function() {
+                    mensagem.classList.add('ativa');
+                    barra.style.width = '100%'; 
+                }, 100); 
+
+                
+                setTimeout(function() {
+                    mensagem.style.display = 'none';
+                }, 3500); 
+            }
+        });
+    </script> 
+    
+    <script th:src="@{/js/task.js}"></script>
+	
+	<script th:inline="javascript">
+		setStatus([[@{/tasks/salvar}]]);
+		setDeleteTask([[@{/tasks/excluir}]]);
+	</script>
 </body>
 </html>

@@ -21,7 +21,7 @@ public class EditarTask implements Command {
 			int id = Integer.parseInt(request.getParameter("id"));
 			TaskDAO dao = new TaskDAO();
 			task = dao.findById(id);
-		
+			System.out.println(id);
 			request.setAttribute("task", task);
 			Template.render("editar", request, response);
 		}
