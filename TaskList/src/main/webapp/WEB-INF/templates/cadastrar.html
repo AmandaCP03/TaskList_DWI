@@ -16,7 +16,7 @@
 	<div class="border-gradient">
 	<div class="form-cadastro">
 		<p><b>Cadastro de nova atividade</b></p><hr>
-		<p th:if="erro" class="error" th:text="${erro}"></p>
+			
 		<form th:action="@{/tasks/adicionar}" method="post">
 			<input type="hidden" id="id" name="id" value="">
 			<p>

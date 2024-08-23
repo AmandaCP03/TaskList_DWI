@@ -23,6 +23,7 @@
     </div>
 	
 	<h3>Task List</h3>
+	<a href="/TaskList/logout" class="btnSair">Sair</a>
 	
 	<a  th:href="@{/tasks/cadastrar}" class="btnfos btnfos-1">
       <svg>
@@ -69,7 +70,7 @@
 				<hr>
 				<p style=" text-align: right; margin-bottom: 0;">
 					<span class="operacao"><a th:href="|editar?id=${task.id}&openModal=true|"><i style="color: #00afff;" class="bi bi-pencil"></i></a></span>
-					<span class="operacao"><a th:href="|excluir?id=${task.id}|"><i style="color: red;" class="bi bi-trash3"></i></a></span>
+					<span class="operacao"><a href="#" th:onclick="excluirTask([[${task.id}]]);"><i style="color: red;" class="bi bi-trash3"></i></a></span>
 				</p>
 				
 			</div>
@@ -92,7 +93,7 @@
 				
 				<p style=" text-align: right; margin-bottom: 0;">
 					<span class="operacao" ><a th:href="|editar?id=${task.id}&openModal=true|" style="margin-left: 10px;"><i style="color: #00afff;" class="bi bi-pencil"></i></a></span>&nbsp;
-					<span class="operacao"><a th:href="|excluir?id=${task.id}|"><i style="color: red;" class="bi bi-trash3"></i></a></span>
+					<span class="operacao"><a href="#" th:onclick="excluirTask([[${task.id}]]);"><i style="color: red;" class="bi bi-trash3"></i></a></span>
 				</p>
 			</div>
 			<div th:if="${#lists.isEmpty(tasks)}" >

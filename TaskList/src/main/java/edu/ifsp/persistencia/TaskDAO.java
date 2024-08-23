@@ -16,15 +16,13 @@ public class TaskDAO {
 	//listener de contexto
 
 	
-	public void insert(Task t) throws PersistenceException {
+	public void insert(Task t, int userId) throws PersistenceException {
 		try (Connection conn = DatabaseConnector.getConnection()) {
 			
 			PreparedStatement ps = conn.prepareStatement(
 					"INSERT INTO task (text, deadline, status) VALUES (?, ?, ?);",
 					Statement.RETURN_GENERATED_KEYS
 				);
-			
-
 			
 			java.util.Date utilDate = t.getDeadline();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -39,26 +37,40 @@ public class TaskDAO {
 			}
 			
 			int id = rs.getInt(1);
-			t.setId(id);			
+			t.setId(id);	
 			
+			PreparedStatement ps2 = conn.prepareStatement(
+					"INSERT INTO task_usuario (usuario, task) VALUES (?, ?);",
+					Statement.RETURN_GENERATED_KEYS
+				);
+			
+			ps2.setInt(1, userId);
+			ps2.setInt(2, t.getId());
+			ps2.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new PersistenceException(e);
 		}
 	}
 	
-	public List<Task> findAll() throws PersistenceException {
+	public List<Task> findAll(int userId) throws PersistenceException {
 		List<Task> tasks = new ArrayList<>();
 		
 		try (Connection conn = DatabaseConnector.getConnection()) {
 
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, deadline, status FROM task  ORDER BY deadline ASC;");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT task.id, text, deadline, status"
+					+ " FROM task"
+					+ " INNER JOIN task_usuario ON task.id = task_usuario.task"
+					+ " WHERE task_usuario.usuario = ?;");
+			ps.setInt(1, userId);
 			
+			ResultSet rs = ps.executeQuery();
 			
 		    while (rs.next()) {
 				Task t = mapRow(rs);
 		    	tasks.add(t);
+
 		    }
 			
 
@@ -112,7 +124,6 @@ public class TaskDAO {
 			ps.setString(2, t.getText());
 			ps.setString(3, t.getStatus());
 			ps.setInt(4, t.getId());
-			System.out.println(ps);
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {

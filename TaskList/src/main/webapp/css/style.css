@@ -229,3 +229,22 @@ a.btnfos{
   -webkit-transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
           transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
 }
+
+.btnSair {
+    position: absolute; /* Fixado na página */
+    top: 20px; /* Distância do topo da página */
+    right: 20px; /* Distância do lado direito da página */
+    padding: 10px 20px;
+    background-color: #ff7300; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    text-decoration: none; /* Remover sublinhado */
+    border-radius: 5px; /* Bordas arredondadas */
+    border: 1px solid #ff7300; /* Borda da mesma cor que o fundo */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btnSair:hover {
+    background-color: #ff5201; /* Cor de fundo ao passar o mouse */
+    border-color: #ff5201; /* Mudar cor da borda ao passar o mouse */
+}

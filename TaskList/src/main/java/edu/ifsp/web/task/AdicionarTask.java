@@ -1,15 +1,16 @@
 package edu.ifsp.web.task;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import edu.ifsp.modelo.Task;
+import edu.ifsp.modelo.Usuario;
 import edu.ifsp.persistencia.TaskDAO;
 import edu.ifsp.web.Command;
-import edu.ifsp.web.templates.Template;
 
 public class AdicionarTask implements Command {
 
@@ -20,23 +21,32 @@ public class AdicionarTask implements Command {
 			
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
+        
+        task.setText(request.getParameter("text"));
+ 		task.setDeadline((Date) sdf.parse(request.getParameter("deadline")));
+ 		
+		HttpSession session = request.getSession(false);
+		int userId = 0;
 		
         if(request.getParameter("id") == null || request.getParameter("id").isBlank()) {
-        	if(request.getParameter("text").isBlank() || request.getParameter("deadline").isBlank()) {
-        		request.setAttribute("erro", "Todos os valores devem ser preenchidos!");
-        		Template.render("cadastrar", request, response);
-        		
-        		return;
-        	}else {
-        		task.setText(request.getParameter("text"));
-        		task.setDeadline((Date) sdf.parse(request.getParameter("deadline")));
-        		task.setStatus("A iniciar");
-        		dao.insert(task);
-        	}
+        	task.setStatus("A iniciar");
         	
+        	if (session != null) {
+        	    Usuario usuario = (Usuario) session.getAttribute("usuario");
+        	    if (usuario != null) {
+        	       userId = usuario.getId();
+        	    } else {
+        	        System.out.println("Nenhum usuário encontrado na sessão.");
+        	    }
+        	} else {
+        	    System.out.println("Sessão não encontrada.");
+        	}
+        			
+        			
+        			
+        	System.out.println("SESSAO:" + request.getSession());
+			dao.insert(task, userId);
 		}else {
-			task.setText(request.getParameter("text"));
-    		task.setDeadline((Date) sdf.parse(request.getParameter("deadline")));
 			task.setStatus(request.getParameter("status"));
 			task.setId(Integer.parseInt(request.getParameter("id")));
 			dao.update(task);

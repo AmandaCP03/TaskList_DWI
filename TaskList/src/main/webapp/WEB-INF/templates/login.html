@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e4faff; /* Alterado para a cor de fundo */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #505050; /* Alterado para a cor do texto */
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            color: #505050; /* Alterado para a cor do texto */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            text-align: left;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #d7d7d7; /* Alterado para a cor da borda */
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff7300; /* Alterado para a cor do botão */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #ff5201; /* Alterado para a cor do botão ao passar o mouse */
+        }
+
+        .signup-button {
+            background-color: #ffd0aa; /* Alterado para a cor do botão de cadastro */
+            color: #505050; /* Cor do texto do botão de cadastro */
+        }
+
+        .signup-button:hover {
+            background-color: #ffd0aa; /* Manter a mesma cor de fundo ao passar o mouse */
+            color: #ff5201; /* Cor do texto ao passar o mouse */
+        }
+
+        p {
+            margin-top: 16px;
+            color: #505050; /* Alterado para a cor do texto */
+        }
+
+        p a {
+            text-decoration: none;
+            color: #ff7300; /* Alterado para a cor do link */
+        }
+
+        p a:hover {
+            color: #ff5201; /* Alterado para a cor do link ao passar o mouse */
+        }
+
+        .error {
+            color: #ca0606;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/login}" method="post">
+            <h2>Login</h2>
+			<p th:if="erro" class="error" th:text="${erro}"></p>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="senha" required>
+            
+            <button type="submit">Entrar</button>
+        </form>
+
+        <a href="/TaskList/cadastro"><button class="signup-button">Cadastre-se aqui</button></a>
+    </div>
+</body>
+</html>
