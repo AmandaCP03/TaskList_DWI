@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package edu.ifsp.web;
 
 import java.io.IOException;

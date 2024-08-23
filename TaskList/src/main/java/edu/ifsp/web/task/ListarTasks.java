@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package edu.ifsp.web.task;
 
 import java.util.List;

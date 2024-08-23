@@ -19,7 +19,7 @@ async function taskEmAndamento(taskId, deadline, text) {
 		method: 'POST',
 		body: data
 	});
-	
+
 	if (response.status == 200) {
 		reload();
 	}
@@ -34,7 +34,7 @@ async function taskConcluida(taskId, deadline, text) {
 		method: 'POST',
 		body: data
 	});
-	
+
 	if (response.status == 200) {
 		reload();
 	}
@@ -47,20 +47,12 @@ async function excluirTask(taskId) {
 		method: 'POST',
 		body: data
 	});
-	
+
 	if (response.status == 200) {
-		showMessage('Tarefa excluída');
+			reload();
 	}
 }
 
-function reload(message) {
+function reload() {
 	location.reload();
-}
-
-function showMessage(message) {
-	const span = document.getElementById("tarefaExcluida");
-	console.log(span);
-	span.textContent = message;
-	span.classList.remove('hidden');
-	setTimeout(() => {span.classList.add('hidden');}, 1000);
 }

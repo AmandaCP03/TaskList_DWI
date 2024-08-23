@@ -1,4 +1,3 @@
-
 --drop database if exists tasklist;
 --create database tasklist;
 --use tasklist;
@@ -26,5 +25,7 @@ create table task_usuario (
 	task int not null references task(id),
 	primary key (id)
 );
+
+
 
 

@@ -134,10 +134,15 @@ public class TaskDAO {
 	public void delete(int id) throws PersistenceException {
 		try (Connection conn = DatabaseConnector.getConnection()) {
 			
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM task WHERE id = ?;");
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM task_usuario WHERE task = ?;");
 			
 			ps.setInt(1, id);
 			ps.executeUpdate();
+			
+			PreparedStatement ps2 = conn.prepareStatement("DELETE FROM task WHERE id = ?;");
+			
+			ps2.setInt(1, id);
+			ps2.executeUpdate();
 			
 		} catch (SQLException e) {
 			throw new PersistenceException(e);
