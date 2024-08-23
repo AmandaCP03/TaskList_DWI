@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package edu.ifsp.web;
 
 import edu.ifsp.persistencia.DatabaseConnector;

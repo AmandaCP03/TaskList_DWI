@@ -49,10 +49,18 @@ async function excluirTask(taskId) {
 	});
 	
 	if (response.status == 200) {
-		reload();
+		showMessage('Tarefa excluída');
 	}
 }
 
 function reload(message) {
 	location.reload();
+}
+
+function showMessage(message) {
+	const span = document.getElementById("tarefaExcluida");
+	console.log(span);
+	span.textContent = message;
+	span.classList.remove('hidden');
+	setTimeout(() => {span.classList.add('hidden');}, 1000);
 }
